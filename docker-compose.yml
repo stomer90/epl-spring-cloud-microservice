@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  epl-config-service:
+    build: ./epl-config-service
+    ports:
+      - "8088:8088"
+    restart:
+      unless-stopped
+    
+
+  epl-discovery-service:
+    build: ./epl-discovery-service
+    ports:
+      - "8061:8061"
+    environment:
+      - REGISTRY_HOST=epl-config-service
+    depends_on:
+      - epl-config-service
+    restart:
+      unless-stopped
+
+
